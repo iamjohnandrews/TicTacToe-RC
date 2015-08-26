@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TTTViewController : UIViewController
+@interface TTTViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (weak, nonatomic) IBOutlet UICollectionView *tttCollectionViewBoard;
 
 

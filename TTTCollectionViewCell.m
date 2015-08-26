@@ -10,4 +10,21 @@
 
 @implementation TTTCollectionViewCell
 
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+        [self setUpUI];// how do I call method in init?
+        NSLog(@"wtf");
+    }
+    return self;
+}
+
+- (void)setUpUI {
+    self.userInteractionEnabled = YES;
+    self.layer.borderColor = [UIColor orangeColor].CGColor;
+    self.layer.borderWidth = 2;
+    self.markerLabel.text = @"ass";
+}
 @end

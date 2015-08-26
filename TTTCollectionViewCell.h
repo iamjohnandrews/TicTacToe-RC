@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface TTTCollectionViewCell : UICollectionViewCell
+@property (weak, nonatomic) IBOutlet UILabel *markerLabel;
 
 @end
