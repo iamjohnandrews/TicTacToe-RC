@@ -21,11 +21,6 @@
    
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    self.tttCollectionViewBoard.backgroundColor = [UIColor redColor];
-}
-
 #pragma mark DataSource Methods
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -41,7 +36,7 @@
                     forCellWithReuseIdentifier:@"tttcell"];
 
     TTTCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"tttcell" forIndexPath:indexPath];
-    
+
     
     return cell;
 }
@@ -50,7 +45,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
  
-    return CGSizeMake(100, 100);
+    return CGSizeMake(90, 90);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
@@ -58,11 +53,9 @@
     return UIEdgeInsetsMake(10, 20, 10, 20);
 }
 
-
-#pragma mark - Delegate Methods
-
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
+    NSLog(@"why the fuck not");
+
 }
 
 #pragma mark - Game Logic Methods
@@ -70,4 +63,7 @@
 
 
 
+- (IBAction)resetGame:(UIButton *)sender {
+    [self.tttCollectionViewBoard reloadData];
+}
 @end

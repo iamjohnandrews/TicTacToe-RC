@@ -10,7 +10,12 @@
 
 @interface TTTViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (weak, nonatomic) IBOutlet UICollectionView *tttCollectionViewBoard;
+@property (weak, nonatomic) IBOutlet UILabel *playerTurnLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *playerOneScore;
+@property (weak, nonatomic) IBOutlet UILabel *playerTwoScore;
+
+- (IBAction)resetGame:(UIButton *)sender;
 
 @end
 

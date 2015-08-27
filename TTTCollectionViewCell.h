@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TTTCollectionViewCell : UICollectionViewCell
+@interface TTTCollectionViewCell : UICollectionViewCell <UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *markerLabel;
 
 @end
