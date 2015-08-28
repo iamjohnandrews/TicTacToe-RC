@@ -28,6 +28,7 @@
 }
 
 - (void)prepareForReuse {
+    self.userInteractionEnabled = YES;
     [self setUpBoardForPlay];
 }
 
