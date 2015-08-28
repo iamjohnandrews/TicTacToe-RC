@@ -37,19 +37,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EBR-tY-XQt">
-                                                    <rect key="frame" x="46" y="44" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EBR-tY-XQt">
+                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="70"/>
+                                                    <color key="textColor" red="1" green="0.038406583295795382" blue="0.046691652859761401" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <constraints>
-                                            <constraint firstItem="EBR-tY-XQt" firstAttribute="leading" secondItem="nZY-XE-4RS" secondAttribute="leadingMargin" constant="38" id="amF-TS-vPg"/>
-                                            <constraint firstItem="EBR-tY-XQt" firstAttribute="top" secondItem="nZY-XE-4RS" secondAttribute="topMargin" constant="36" id="bnz-s7-bE7"/>
-                                        </constraints>
                                         <size key="customSize" width="80" height="80"/>
                                         <connections>
                                             <outlet property="markerLabel" destination="EBR-tY-XQt" id="HWs-pv-sus"/>

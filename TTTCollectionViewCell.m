@@ -10,51 +10,32 @@
 
 @implementation TTTCollectionViewCell
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
     if (self) {
-        UIView *background = [[UIView alloc] initWithFrame:self.frame];
-        self.backgroundView = background;
-        self.backgroundView.backgroundColor = [UIColor yellowColor];
-        
-        UIView *selectedBackground = [[UIView alloc] initWithFrame:self.frame];
-        self.selectedBackgroundView = selectedBackground;
-        self.selectedBackgroundView.backgroundColor = [UIColor blueColor];
-        self.contentView.userInteractionEnabled = YES;
+        [self setUpBoardForPlay];
     }
     return self;
 }
 
-- (void)setMarkerLabel:(UILabel *)markerLabel {
-    
-}
-
--(void)setHighlighted:(BOOL)highlighted
-{
-    [super setHighlighted:highlighted];
-    [self setNeedsDisplay];
-}
-
 - (void)setSelected:(BOOL)selected {
     [super setSelected:selected];
-    [self setNeedsDisplay];
+    if (selected) {
+        self.contentView.backgroundColor = [UIColor lightGrayColor];
+        self.userInteractionEnabled = NO;
+    }
 }
 
-- (void)setUpUI {
-    self.userInteractionEnabled = YES;
+- (void)prepareForReuse {
+    [self setUpBoardForPlay];
+}
+
+- (void)setUpBoardForPlay {
+    self.contentView.backgroundColor = [UIColor whiteColor];
+    self.markerLabel.text = nil;
     self.layer.borderColor = [UIColor orangeColor].CGColor;
     self.layer.borderWidth = 2;
-    self.markerLabel.text = @"ass";
-    self.markerLabel.textColor = [UIColor whiteColor];
-    
-    UITapGestureRecognizer *cellTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cellTapped:)];
-    cellTapRecognizer.delegate = self;
-    cellTapRecognizer.numberOfTapsRequired = 1;
-    [self.contentView addGestureRecognizer:cellTapRecognizer];
-}
-
-- (void)cellTapped:(UIGestureRecognizer *)tapRecognizer {
-    NSLog(@"POST cell tapped self.highlighted =%d, self.selected =%d", self.highlighted, self.selected);
 }
 
 @end

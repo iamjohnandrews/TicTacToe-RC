@@ -10,4 +10,6 @@
 
 @interface Player : NSObject
 
+@property (nonatomic) NSInteger victory;
+
 @end

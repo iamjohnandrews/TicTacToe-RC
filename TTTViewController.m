@@ -11,32 +11,27 @@
 #import "TTTCollectionViewCell.h"
 
 @interface TTTViewController ()
-
+@property (nonatomic) BOOL isFirstPlayersTurn;
+@property (nonatomic, strong) NSDictionary *gameBoardPlacesDict;
 @end
 
 @implementation TTTViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
+    self.isFirstPlayersTurn = YES;
+    self.gameBoardPlacesDict = [NSDictionary dictionary];
 }
 
 #pragma mark DataSource Methods
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 3;
-}
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 3;
+    return 9;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self.tttCollectionViewBoard registerClass:[TTTCollectionViewCell class]
-                    forCellWithReuseIdentifier:@"tttcell"];
 
     TTTCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"tttcell" forIndexPath:indexPath];
-
     
     return cell;
 }
@@ -54,16 +49,31 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"why the fuck not");
-
+    TTTCollectionViewCell *selectedCell = (TTTCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    
+    if (self.isFirstPlayersTurn) {
+        selectedCell.markerLabel.text = @"X";
+        selectedCell.tag = 1;
+        self.isFirstPlayersTurn = NO;
+    } else {
+        selectedCell.markerLabel.text = @"O";
+        selectedCell.tag = 2;
+        self.isFirstPlayersTurn = YES;
+    }
 }
 
 #pragma mark - Game Logic Methods
 
-
+- (BOOL)isThereThreeAcrossForPlayer:(NSString *)player withPosition:(NSInteger)cell {
+    BOOL isThereAWinner = NO;
+    
+    
+    return isThereAWinner;
+}
 
 
 - (IBAction)resetGame:(UIButton *)sender {
     [self.tttCollectionViewBoard reloadData];
+    self.gameBoardPlacesDict = [NSDictionary dictionary];
 }
 @end
