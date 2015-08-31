@@ -10,7 +10,7 @@
 #import "Player.h"
 #import "TTTCollectionViewCell.h"
 
-@interface TTTViewController ()
+@interface TTTViewController () <UIAlertViewDelegate>
 @property (nonatomic) BOOL isFirstPlayersTurn;
 @property (nonatomic, strong) NSString *winner;
 @property (nonatomic, strong) NSMutableArray *gameBoardPlacesX;
@@ -74,11 +74,38 @@
 
 #pragma mark - Accessors
 
+- (void)setIsFirstPlayersTurn:(BOOL)isFirstPlayersTurn {
+
+    if (isFirstPlayersTurn) {
+        self.playerTurnLabel.text = @"Player 1 Turn";
+    } else {
+        self.playerTurnLabel.text = @"Player 2 Turn";
+    }
+    _isFirstPlayersTurn = isFirstPlayersTurn;
+}
+
 - (void)setWinner:(NSString *)winner {
+    NSString *winningPlayer;
     if (winner) {
+        if (self.isFirstPlayersTurn) {
+            winningPlayer = @"Player 2";
+        } else {
+            winningPlayer = @"Player 1";
+        }
         NSLog(@"player %@ WON", winner);
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"WINNER"
+                                                       message:[NSString stringWithFormat:@"Congratulations to %@", winningPlayer]
+                                                      delegate:self
+                                             cancelButtonTitle:@"Play Again"
+                                             otherButtonTitles:nil];
+        [alert show];
     }
     _winner = winner;
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [self.tttCollectionViewBoard reloadData];
+    [self startNewGame];
 }
 
 - (IBAction)resetGame:(UIButton *)sender {
