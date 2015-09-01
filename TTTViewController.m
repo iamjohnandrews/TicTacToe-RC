@@ -30,17 +30,16 @@ NSString * const playerTwoScoreKey = @"playerTwoVictoryCount";
     [self getPlayersScores];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    [[NSUserDefaults standardUserDefaults]setObject:self.playerOneVictories forKey:playerOneScoreKey];
-    [[NSUserDefaults standardUserDefaults]setObject:self.playerTwoVictories forKey:playerTwoScoreKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
 - (void)startNewGame {
     self.isFirstPlayersTurn = YES;
     self.gameBoardPlacesO = [NSMutableArray array];
     self.gameBoardPlacesX = [NSMutableArray array];
+}
+
+- (void)savePlayerScores {
+    [[NSUserDefaults standardUserDefaults]setObject:self.playerOneVictories forKey:playerOneScoreKey];
+    [[NSUserDefaults standardUserDefaults]setObject:self.playerTwoVictories forKey:playerTwoScoreKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)getPlayersScores {
@@ -120,9 +119,11 @@ NSString * const playerTwoScoreKey = @"playerTwoVictoryCount";
         if (self.isFirstPlayersTurn) {
             winningPlayer = @"Player 2";
             self.playerTwoVictories = [NSNumber numberWithInt:[self.playerTwoVictories intValue] + 1];
+            self.playerTwoScore.text = [NSString stringWithFormat:@"%@", self.playerTwoVictories];
         } else {
             winningPlayer = @"Player 1";
             self.playerOneVictories = [NSNumber numberWithInt:[self.playerOneVictories intValue] + 1];
+            self.playerOneScore.text = [NSString stringWithFormat:@"%@", self.playerOneVictories];
         }
         NSLog(@"player %@ WON", winner);
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"WINNER"
@@ -131,6 +132,7 @@ NSString * const playerTwoScoreKey = @"playerTwoVictoryCount";
                                              cancelButtonTitle:@"Play Again"
                                              otherButtonTitles:nil];
         [alert show];
+        [self savePlayerScores];
     }
     _winner = winner;
 }
@@ -151,49 +153,20 @@ NSString * const playerTwoScoreKey = @"playerTwoVictoryCount";
     if (self.gameBoardPlacesX.count + self.gameBoardPlacesO.count < 5) {
         return;
     }
-    /*
-    if ([self isThreeInRowDiagonal:self.gameBoardPlacesX]) {
-        self.winner = @"X";
-    } else if ([self isThreeInRowHorizontal:self.gameBoardPlacesX]) {
-        self.winner = @"X";
-    } else if ([self isThreeInRowVertical:self.gameBoardPlacesX]) {
-        self.winner = @"X";
-    }
-
-    if ([self isThreeInRowDiagonal:self.gameBoardPlacesO]) {
-        self.winner = @"O";
-    } else if ([self isThreeInRowHorizontal:self.gameBoardPlacesO]) {
-        self.winner = @"O";
-    } else if ([self isThreeInRowVertical:self.gameBoardPlacesO]) {
-        self.winner = @"O";
-    }
-    */
     
-    /* works but ugly -- move these calls to a method that loops through em all
-    if ([self isThreeInARowFrom:self.gameBoardPlacesX with:0 to:3 incrementCellsBy:1] ||
-        [self isThreeInARowFrom:self.gameBoardPlacesX with:3 to:6 incrementCellsBy:1] ||
-        [self isThreeInARowFrom:self.gameBoardPlacesX with:6 to:9 incrementCellsBy:1]) {
-        self.winner = @"X";
-    }  else if ([self isThreeInARowFrom:self.gameBoardPlacesX with:2 to:7 incrementCellsBy:2] ||
-                [self isThreeInARowFrom:self.gameBoardPlacesX with:0 to:9 incrementCellsBy:4]) {
-        self.winner = @"X";
-    } else if ([self isThreeInARowFrom:self.gameBoardPlacesX with:0 to:7 incrementCellsBy:3] ||
-               [self isThreeInARowFrom:self.gameBoardPlacesX with:1 to:8 incrementCellsBy:3] ||
-               [self isThreeInARowFrom:self.gameBoardPlacesX with:2 to:9 incrementCellsBy:3]) {
-        self.winner = @"X";
-    }
-    */
-
-    NSNumber *max=[self.gameBoardPlacesX valueForKeyPath:@"@max.self"];
-    NSNumber *min=[self.gameBoardPlacesX valueForKeyPath:@"@min.self"];
-    
-    if ([self isThreeInARowFrom:self.gameBoardPlacesX with:[min integerValue] to:[max integerValue] incrementCellsBy:1]) {
+    if ([self isThreeInRowDiagonal:self.gameBoardPlacesX] ||
+        [self isThreeInRowHorizontal:self.gameBoardPlacesX] ||
+        [self isThreeInRowVertical:self.gameBoardPlacesX]) {
         self.winner = @"X";
     }
 
+    if ([self isThreeInRowDiagonal:self.gameBoardPlacesO] ||
+        [self isThreeInRowHorizontal:self.gameBoardPlacesO] ||
+        [self isThreeInRowVertical:self.gameBoardPlacesO]) {
+        self.winner = @"O";
+    }
 }
 
-/* works but ugly
 - (BOOL)isThreeInARowFrom:(NSArray *)playerMoves with:(int)startCell to:(int)endCell incrementCellsBy:(int)increment {
     BOOL doHaveAWinner = YES;
     for  (int move = startCell; move < endCell; move+= increment) {
@@ -201,36 +174,12 @@ NSString * const playerTwoScoreKey = @"playerTwoVictoryCount";
             doHaveAWinner = NO;
         }
     }
-
-    return doHaveAWinner;
-}
-*/
-
-
-
-- (BOOL)isThreeInARowFrom:(NSArray *)playerMoves with:(NSInteger)startCell to:(NSInteger)endCell incrementCellsBy:(int)increment {
-    BOOL doHaveAWinner = YES;
-    int counter;
-    for  (NSInteger move = 0; move < 9; move+= increment) {
-        counter++;
-        NSLog(@"counter =%d", counter);
-        if (![playerMoves containsObject:[NSNumber numberWithInteger:move]]) {
-            doHaveAWinner = NO;
-        }
-        if (counter % 3 == 0) {
-            if (doHaveAWinner) {
-                break;
-            } else {
-                doHaveAWinner = YES;
-            }
-        }
-    }
     
     return doHaveAWinner;
 }
 
 -(BOOL)isThreeInRowHorizontal:(NSArray *)playerMoves {
-    BOOL doHaveAWinner = YES;
+    BOOL doHaveAWinner = [self isThreeInARowFrom:playerMoves with:0 to:3 incrementCellsBy:1];
     for (int move = 0; move < 3; move++) {
         if (![playerMoves containsObject:[NSNumber numberWithInt:move]]) {
             doHaveAWinner = NO;
