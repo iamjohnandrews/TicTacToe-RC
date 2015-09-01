@@ -180,82 +180,44 @@ NSString * const playerTwoScoreKey = @"playerTwoVictoryCount";
 
 -(BOOL)isThreeInRowHorizontal:(NSArray *)playerMoves {
     BOOL doHaveAWinner = [self isThreeInARowFrom:playerMoves with:0 to:3 incrementCellsBy:1];
-    for (int move = 0; move < 3; move++) {
-        if (![playerMoves containsObject:[NSNumber numberWithInt:move]]) {
-            doHaveAWinner = NO;
-        }
-    }
     if (doHaveAWinner) {
         return doHaveAWinner;
-    } else {
-        doHaveAWinner = YES;
     }
-    for (int move = 3; move < 6; move++) {
-        if (![playerMoves containsObject:[NSNumber numberWithInt:move]]) {
-            doHaveAWinner = NO;
-        }
-    }
+    
+    doHaveAWinner = [self isThreeInARowFrom:playerMoves with:3 to:6 incrementCellsBy:1];
     if (doHaveAWinner) {
         return doHaveAWinner;
-    } else {
-        doHaveAWinner = YES;
     }
-    for (int move = 6; move < 9; move++) {
-        if (![playerMoves containsObject:[NSNumber numberWithInt:move]]) {
-            doHaveAWinner = NO;
-        }
-    }
+    
+    doHaveAWinner = [self isThreeInARowFrom:playerMoves with:6 to:9 incrementCellsBy:1];
+
     return doHaveAWinner;
 }
 
 -(BOOL)isThreeInRowDiagonal:(NSArray *)playerMoves {
-    BOOL doHaveAWinner = YES;
-    for (int move = 2; move < 7; move+=2) {
-        if (![playerMoves containsObject:[NSNumber numberWithInt:move]]) {
-            doHaveAWinner = NO;
-        }
-    }
+    BOOL doHaveAWinner = [self isThreeInARowFrom:playerMoves with:2 to:7 incrementCellsBy:2];
     if (doHaveAWinner) {
         return doHaveAWinner;
-    } else {
-        doHaveAWinner = YES;
     }
-    for (int move = 0; move < 9; move+=4) {
-        if (![playerMoves containsObject:[NSNumber numberWithInt:move]]) {
-            doHaveAWinner = NO;
-        }
-    }
+    
+    doHaveAWinner = [self isThreeInARowFrom:playerMoves with:0 to:9 incrementCellsBy:4];
 
     return doHaveAWinner;
 }
 
 -(BOOL)isThreeInRowVertical:(NSArray *)playerMoves {
-    BOOL doHaveAWinner = YES;
-    for (int move = 0; move < 7; move+=3) {
-        if (![playerMoves containsObject:[NSNumber numberWithInt:move]]) {
-            doHaveAWinner = NO;
-        }
-    }
+    BOOL doHaveAWinner = [self isThreeInARowFrom:playerMoves with:0 to:7 incrementCellsBy:3];
     if (doHaveAWinner) {
         return doHaveAWinner;
-    } else {
-        doHaveAWinner = YES;
     }
-    for (int move = 1; move < 8; move+=3) {
-        if (![playerMoves containsObject:[NSNumber numberWithInt:move]]) {
-            doHaveAWinner = NO;
-        }
-    }
+    
+    doHaveAWinner = [self isThreeInARowFrom:playerMoves with:1 to:8 incrementCellsBy:3];
     if (doHaveAWinner) {
         return doHaveAWinner;
-    } else {
-        doHaveAWinner = YES;
     }
-    for (int move = 2; move < 9; move+=3) {
-        if (![playerMoves containsObject:[NSNumber numberWithInt:move]]) {
-            doHaveAWinner = NO;
-        }
-    }
+    
+    doHaveAWinner = [self isThreeInARowFrom:playerMoves with:2 to:9 incrementCellsBy:3];
+
     return doHaveAWinner;
 }
 
